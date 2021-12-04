@@ -1,0 +1,6 @@
+find_package(Threads REQUIRED)
+add_executable(server server.cpp)
+target_link_libraries(server bergamot-translator)
+target_link_libraries(server ${Boost_LIBRARIES})
+target_link_libraries(server ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(server "-Wl,--start-group" ${MKL_LIBRARIES} "-Wl,--end-group -lpthread -lm -ldl")
