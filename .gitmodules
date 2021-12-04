@@ -3,4 +3,4 @@
 	url = https://github.com/crowcpp/crow.git
 [submodule "3rd_party/moz-bergamot-translator"]
 	path = 3rd_party/moz-bergamot-translator
-	url = https://github.com/mozilla/bergamot-translator.git
+	url = https://github.com/browsermt/bergamot-translator
