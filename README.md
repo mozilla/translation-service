@@ -1,4 +1,4 @@
-# Translation server
+# Translation service
 
 ## Running
 1. Download models from https://github.com/mozilla/firefox-translations-models/tree/main/models/prod
