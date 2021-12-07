@@ -28,7 +28,7 @@ RUN apt-get install -y libpcre2-dev
 
 ADD ./src ./src
 ADD ./3rd_party ./3rd_party
-ADD ./compile.sh ./compile.sh
+ADD ./scripts/compile.sh ./compile.sh
 ADD ./.gitmodules ./.gitmodules
 ADD ./.git ./.git
 ADD ./CMakeLists.txt ./CMakeLists.txt
