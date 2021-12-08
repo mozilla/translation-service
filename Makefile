@@ -21,7 +21,7 @@ debug:
 call:
 	curl --header "Content-Type: application/json" \
       --request POST \
-      --data '{"from":"en", "to":"es", "text": "Hello World!"}' \
+      --data '{"from":"es", "to":"en", "text": "Hola Mundo"}' \
       http://0.0.0.0:8080/v1/translate
 
 python-env:
