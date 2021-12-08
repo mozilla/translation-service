@@ -17,10 +17,10 @@ Environment variables to set in container:
 
 `PORT` - service port (default is 8000)
 
-`LOGGING_LEVEL` - ERROR,WARNING,INFOR or DEBUG (default is INFO)
+`LOGGING_LEVEL` - ERROR, WARNING, INFO or DEBUG (default is INFO)
 
-`WORKERS` - number of bergamot-translator workers (default is 1). 0 - automatircally set as number of available CPUs.
-It is recommended to minimize worekrs and scale horizontaly with k8s means.
+`WORKERS` - number of bergamot-translator workers (default is 1). 0 - automatically set as number of available CPUs.
+It is recommended to minimize workers and scale horizontaly with k8s means.
 
 
 ## Testing
