@@ -35,6 +35,10 @@ ADD ./CMakeLists.txt ./CMakeLists.txt
 
 RUN bash compile.sh
 
-EXPOSE 8080
+ENV PORT=8000
+ENV WORKERS=1
+ENV LOG_LEVEL=INFO
+
 CMD ["/app/build/src/server"]
+# for debugging
 # CMD ["/bin/bash"]
