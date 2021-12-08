@@ -1,8 +1,13 @@
 FROM ubuntu:focal
 
-WORKDIR app
+WORKDIR /app
 
 ARG DEBIAN_FRONTEND=noninteractive
+
+# add a non-privileged user for running the application
+RUN groupadd --gid 10001 app && \
+    useradd -g app --uid 10001 --shell /usr/sbin/nologin --create-home --home-dir /app app
+
 
 RUN apt update && \
   apt -y install git cmake
@@ -39,6 +44,6 @@ ENV PORT=8000
 ENV WORKERS=1
 ENV LOG_LEVEL=INFO
 
+USER app
+
 CMD ["/app/build/src/server"]
-# for debugging
-# CMD ["/bin/bash"]
