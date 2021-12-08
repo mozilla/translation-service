@@ -16,7 +16,7 @@ def test_long():
     text = 'Rocket is a web framework for Rust. If youd like, you can think of Rocket as being a more flexible, friendly medley of Rails, Flask, Bottle, and Yesod. ' \
            'We prefer to think of Rocket as something new. Rocket aims to be fast, easy, and flexible while offering guaranteed safety and security where it can. ' \
            'Importantly, Rocket also aims to be fun, and it accomplishes this by ensuring that you write as little code as needed to accomplish your task.'
-    query = {"from": "en", "to": "es", "text": text}
+    query = {"from": "en", "to": "et", "text": text}
 
     resp = requests.post(url + '/v1/translate', json=query)
 
@@ -45,3 +45,14 @@ def test_invalid_request():
     resp = requests.post(url + '/v1/translate', data="xxx")
 
     assert resp.status_code == 400
+
+
+def test_heartbeat():
+    resp = requests.get(url + '/__heartbeat__')
+
+    assert resp.status_code == 200
+
+def test_lbheartbeat():
+    resp = requests.get(url + '/__lbheartbeat__')
+
+    assert resp.status_code == 200
