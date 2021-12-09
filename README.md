@@ -4,7 +4,7 @@ HTTP service that uses [bergamot-translator](https://github.com/mozilla/bergamot
 
 ## Running locally
 1. git clone this repo
-2. Download models from https://github.com/mozilla/firefox-translations-models/tree/main/models/prod, unzip and copy to `models` directory or use `make models`
+2. Download models from https://github.com/mozilla/firefox-translations-models/tree/main/models/prod, unzip and copy to `models` directory or use `make download-models`
 3. `make build-docker`
 4. `make run`
 5. `make call`
