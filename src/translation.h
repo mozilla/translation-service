@@ -56,7 +56,11 @@ namespace marian {
                     MemoryBundle memoryBundle;
                     auto translationModel = New<TranslationModel>(options, std::move(memoryBundle), _numWorkers);
                     _models[pair] = translationModel;
+                    std::cout << "Model " << pair << " is loaded" << std::endl;
                 }
+
+                if (_models.empty())
+                    throw std::logic_error("Models directory is empty");
             }
 
             int isSupported(const std::string from, const std::string to) {
