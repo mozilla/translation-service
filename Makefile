@@ -9,7 +9,7 @@ build-docker:
 compile:
 	bash scripts/compile.sh
 
-models:
+download-models:
 	bash scripts/download-test-models.sh
 
 run:
