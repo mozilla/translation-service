@@ -11,10 +11,11 @@ HTTP service that uses [bergamot-translator](https://github.com/mozilla/bergamot
 
 ## Calling the service
 ````
-curl --header "Content-Type: application/json" \
+$ curl --header "Content-Type: application/json" \
       --request POST \
       --data '{"from":"es", "to":"en", "text": "Hola Mundo"}' \
       http://0.0.0.0:8080/v1/translate
+> {"result": "Hello World"}
 `````
 
 ## Service configuration
