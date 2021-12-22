@@ -3,11 +3,12 @@
 HTTP service that uses [bergamot-translator](https://github.com/mozilla/bergamot-translator) and compressed neural machine translation [models](https://github.com/mozilla/firefox-translations-models) for fast inference on CPU.
 
 ## Running locally
-1. git clone this repo
-2. `make setup-models`
-3. `make build-docker`
-4. `make run`
-5. `make call`
+1. Install Git LFS `https://git-lfs.github.com/`
+2. git clone this repo
+3. `make setup-models`
+4. `make build-docker`
+5. `make run`
+6. `make call`
 
 ## Calling the service
 ````
