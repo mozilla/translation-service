@@ -1,5 +1,8 @@
 # Translation service
 
+[<img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker">](https://hub.docker.com/r/mozilla/translation-service)
+
+
 HTTP service that uses [bergamot-translator](https://github.com/mozilla/bergamot-translator) and compressed neural machine translation [models](https://github.com/mozilla/firefox-translations-models) for fast inference on CPU.
 
 ## Running locally
