@@ -11,7 +11,7 @@ HTTP service that uses [bergamot-translator](https://github.com/mozilla/bergamot
 3. `make setup-models`
 4. `make build-docker`
 5. `make run`
-6. In a separate terminal: `make call`
+6. `make call`
 
 ## Calling the service
 ````
