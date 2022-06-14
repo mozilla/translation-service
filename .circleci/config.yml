@@ -75,11 +75,17 @@ jobs:
             docker tag app:build translation-service:latest
             make run
             sleep 30s
+            docker logs translation-service
       - run:
           name: Run tests
           command: |
             make python-env
             make test
+      - run:
+          name: Show logs
+          when: always
+          command: |
+            docker logs translation-service
 
   deploy:
     docker:
