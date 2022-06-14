@@ -71,15 +71,15 @@ jobs:
             make download-models
       - run:
           name: Run service
+          background: true
           command: |
             docker tag app:build translation-service:latest
             make run
-            sleep 30s
-            docker logs translation-service
       - run:
           name: Run tests
           command: |
             make python-env
+            sleep 10s
             make test
       - run:
           name: Show logs
