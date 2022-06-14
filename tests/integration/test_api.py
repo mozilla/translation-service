@@ -41,6 +41,13 @@ def test_non_latin():
     assert resp.status_code == 200
     assert resp.json()['result'] == 'Как дела?'
 
+def test_int8():
+    query = {"from": "en", "to": "uk", "text": 'How are you?'}
+
+    resp = requests.post(url + '/v1/translate', json=query)
+
+    assert resp.status_code == 200
+    assert resp.json()['result'] == 'Як ти?'
 
 def test_json_escaping():
     query = {"from": "es", "to": "en", "text": '"Hola Mundo"'}
