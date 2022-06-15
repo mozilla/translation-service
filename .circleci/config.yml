@@ -71,14 +71,14 @@ jobs:
           command: |
             echo $(pwd)
             make download-models
-            ls /home/circleci/translation-service/models
+            ls /home/circleci/translation-service/models/*
       - run:
           name: Run service
           background: true
           command: |
             docker tag app:build translation-service:latest
+            ls /home/circleci/translation-service/models/*
             docker run --name translation-service -it --rm -v /home/circleci/translation-service/models:/models -p 8080:8080 -e PORT=8080 translation-service
-
       - run:
           name: Run tests
           command: |
