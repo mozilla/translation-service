@@ -69,7 +69,9 @@ jobs:
       - run:
           name: Download models
           command: |
+            echo $(pwd)
             make download-models
+            ls /home/circleci/translation-service/models
       - run:
           name: Run service
           background: true
