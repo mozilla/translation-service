@@ -118,7 +118,7 @@ namespace marian {
                         "\nskip-costls: True"
                         "\nquiet: True"
                         "\nquiet-translation: True"
-                        "\ngemm-precision: int8shift";
+                        "\ngemm-precision: int8shiftAll";
 
                 options = options + "\nmodels: [" + modelPath + "]\nvocabs: [" + srcVocabPath + ", " + trgVocabPath +
                           "]\nshortlist: [" + shortlistPath + ", false]";
