@@ -52,6 +52,7 @@ jobs:
             - /home/circleci/cache/docker.tar
 
   test:
+    working_directory: /home/circleci/translation-service
     docker:
       - image: cimg/python:3.10.4
         auth:
@@ -74,18 +75,14 @@ jobs:
           background: true
           command: |
             docker tag app:build translation-service:latest
-            make run
+            docker run --name translation-service -it --rm -v /home/circleci/translation-service/models:/models -p 8080:8080 -e PORT=8080 translation-service
+
       - run:
           name: Run tests
           command: |
             make python-env
             sleep 10s
             make test
-      - run:
-          name: Show logs
-          when: always
-          command: |
-            docker logs translation-service
 
   deploy:
     docker:
