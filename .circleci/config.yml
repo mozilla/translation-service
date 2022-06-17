@@ -55,12 +55,8 @@ jobs:
     working_directory: /home/circleci/translation-service
     docker:
       - image: cimg/python:3.10.4
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS
     steps:
       - checkout
-      - setup_remote_docker
       - restore_cache:
           key: v1-{{.Environment.CIRCLE_SHA1}}
       - run:
