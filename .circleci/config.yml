@@ -65,7 +65,7 @@ jobs:
           name: Install make
           command: |
             sudo apt-get update -q
-            sudo apt-get install -qy build-essentials
+            sudo apt-get install -qy build-essential
       - run:
           name: Download models
           command: |
