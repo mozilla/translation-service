@@ -45,11 +45,46 @@ jobs:
       # required since Workflows do not have the same remote docker instance.
       - run:
           name: docker save app:build
-          command: mkdir -p /cache; docker save -o /cache/docker.tar "app:build"
+          command: mkdir -p /home/circleci/cache; docker save -o /home/circleci/cache/docker.tar "app:build"
       - save_cache:
           key: v1-{{ .Environment.CIRCLE_SHA1 }}-{{epoch}}
           paths:
-            - /cache/docker.tar
+            - /home/circleci/cache/docker.tar
+
+  test:
+    working_directory: /home/circleci/translation-service
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-{{.Environment.CIRCLE_SHA1}}
+      - run:
+          name: Restore Docker image cache
+          command: docker load -i /home/circleci/cache/docker.tar
+      - run:
+          name: Install make
+          command: |
+            sudo apt-get update -q
+            sudo apt-get install -qy build-essential
+      - run:
+          name: Download models
+          command: |
+            echo $(pwd)
+            make download-models
+            ls /home/circleci/translation-service/models/*
+      - run:
+          name: Run service
+          background: true
+          command: |
+            docker tag app:build translation-service:latest
+            ls /home/circleci/translation-service/models/*
+            docker run --name translation-service -it --rm -v /home/circleci/translation-service/models:/models -p 8080:8080 -e PORT=8080 translation-service
+      - run:
+          name: Run tests
+          command: |
+            make python-env
+            sleep 10s
+            make test
 
   deploy:
     docker:
@@ -63,7 +98,7 @@ jobs:
           key: v1-{{.Environment.CIRCLE_SHA1}}
       - run:
           name: Restore Docker image cache
-          command: docker load -i /cache/docker.tar
+          command: docker load -i /home/circleci/cache/docker.tar
 
       - run:
           name: Deploy to Dockerhub
@@ -86,9 +121,12 @@ workflows:
   build-test-deploy:
     jobs:
       - build
-      - deploy:
+      - test:
           requires:
             - build
+      - deploy:
+          requires:
+            - test
           filters:
             tags:
               only: /.*/

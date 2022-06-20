@@ -46,6 +46,8 @@ namespace marian {
                     std::string modelPath = "";
                     std::string shortlistPath = "";
 
+                    std::cout << "Looking for models in " << basePath << std::endl;
+
                     for (const auto &entry2: std::filesystem::directory_iterator(basePath)) {
                         auto fileNameStr = entry2.path().filename().string();
                         auto pathStr = entry2.path().string();
@@ -68,6 +70,7 @@ namespace marian {
                     auto config = buildConfig(modelPath, srcVocabPath, trgVocabPath, shortlistPath);
                     auto options = parseOptionsFromString(config);
                     MemoryBundle memoryBundle;
+                    std::cout << "Creating translation model for " << pair << std::endl;
                     auto translationModel = New<TranslationModel>(options, std::move(memoryBundle), _numWorkers);
                     _models[pair] = translationModel;
                     std::cout << "Model " << pair << " is loaded" << std::endl;

@@ -13,7 +13,7 @@ download-models:
 	bash scripts/download-test-models.sh
 
 run:
-	docker run --name translation-service -it -d --rm -v $$(pwd)/models:/models -p 8080:8080 -e PORT=8080 translation-service
+	docker run --name translation-service -it --rm -v $$(pwd)/models:/models -p 8080:8080 -e PORT=8080 translation-service
 
 debug:
 	docker run --name translation-service -it --rm -v $$(pwd):/app -v $$(pwd)/models:/models -p 8080:8080 translation-service bash
@@ -25,7 +25,7 @@ call:
       http://0.0.0.0:8080/v1/translate
 
 python-env:
-	pip intall pytest locust
+	pip3 install pytest locust
 
 test:
 	pytest tests/integration
