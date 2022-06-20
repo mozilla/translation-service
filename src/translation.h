@@ -42,7 +42,10 @@ namespace marian {
                     std::string modelPath = "";
                     std::string shortlistPath = "";
 
+                    std::cout << "Looking for models in " << basePath << std::endl;
+
                     for (const auto &entry2: std::filesystem::directory_iterator(basePath)) {
+                        std::cout << "Adding file " << entry2.path().filename().string() << std::endl;
                         if (endsWith(entry2.path().filename().string(), ".spm"))
                             vocabPath = entry2.path().string();
                         else if (endsWith(entry2.path().filename().string(), ".intgemm.alphas.bin"))
@@ -51,12 +54,19 @@ namespace marian {
                             shortlistPath = entry2.path().string();
                     }
 
+                    std::cout << "Building models config for " << pair << std::endl;
+
                     auto config = buildConfig(modelPath, vocabPath, shortlistPath);
                     auto options = parseOptionsFromString(config);
                     MemoryBundle memoryBundle;
+                    std::cout << "Creating translation model for " << pair << std::endl;
                     auto translationModel = New<TranslationModel>(options, std::move(memoryBundle), _numWorkers);
                     _models[pair] = translationModel;
+                    std::cout << "Model " << pair << " is loaded" << std::endl;
                 }
+
+                if (_models.empty())
+                    throw std::logic_error("Models directory is empty");
             }
 
             int isSupported(const std::string from, const std::string to) {

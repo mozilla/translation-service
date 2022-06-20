@@ -9,7 +9,7 @@ build-docker:
 compile:
 	bash scripts/compile.sh
 
-models:
+download-models:
 	bash scripts/download-test-models.sh
 
 run:
@@ -25,7 +25,7 @@ call:
       http://0.0.0.0:8080/v1/translate
 
 python-env:
-	pip intall pytest locust
+	pip3 install pytest locust
 
 test:
 	pytest tests/integration
@@ -35,3 +35,12 @@ load-test-ui:
 
 load-test:
 	locust -f tests/load/stress.py --host http://0.0.0.0:8080 --headless --tags mixed --spawn-rate 1 --users 500
+
+setup-models:
+	git clone https://github.com/mozilla/firefox-translations-models
+	rm -rf models
+	mkdir models
+	mv firefox-translations-models/models/dev/* models/
+	mv firefox-translations-models/models/prod/* models/
+	gunzip -r models/
+	rm -rf firefox-translations-models

@@ -33,6 +33,26 @@ def test_pivot():
     assert resp.json()['result'] == 'Tere Maailm'
 
 
+def test_non_latin():
+    query = {"from": "en", "to": "ru", "text": 'How are you?'}
+
+    resp = requests.post(url + '/v1/translate', json=query)
+    translation = resp.json()['result']
+
+    assert resp.status_code == 200
+    # behavior of this model can be non-deterministic, both translations are correct
+    assert translation == 'Как дела?' or translation == 'Как у тебя дела?'
+
+
+def test_json_escaping():
+    query = {"from": "es", "to": "en", "text": '"Hola Mundo"'}
+
+    resp = requests.post(url + '/v1/translate', json=query)
+
+    assert resp.status_code == 200
+    assert resp.json()['result'] == '"Hello World"'
+
+
 def test_unknown_pair():
     query = {"from": "es", "to": "xx", "text": "Hola Mundo"}
 
