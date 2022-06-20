@@ -37,9 +37,11 @@ def test_non_latin():
     query = {"from": "en", "to": "ru", "text": 'How are you?'}
 
     resp = requests.post(url + '/v1/translate', json=query)
+    translation = resp.json()['result']
 
     assert resp.status_code == 200
-    assert resp.json()['result'] == 'Как дела?'
+    # behavior of this model can be non-deterministic, both translations are correct
+    assert translation == 'Как дела?' or translation == 'Как у тебя дела?'
 
 
 def test_json_escaping():
