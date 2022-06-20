@@ -25,7 +25,7 @@ call:
       http://0.0.0.0:8080/v1/translate
 
 python-env:
-	pip install pytest locust
+	pip3 install pytest locust
 
 test:
 	pytest tests/integration
