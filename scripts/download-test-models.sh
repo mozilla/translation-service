@@ -33,7 +33,7 @@ wget https://storage.googleapis.com/bergamot-models-sandbox/${version}/enbg/mode
 wget https://storage.googleapis.com/bergamot-models-sandbox/${version}/enbg/vocab.bgen.spm
 
 cd ../enuk
-wget https://storage.googleapis.com/bergamot-models-sandbox/${version}/enuk/lex.50.50.enuk.s2t.bin
+wget https://storage.googleapis.com/bergamot-models-sandbox/${version}/enuk/lex.enuk.s2t.bin
 wget https://storage.googleapis.com/bergamot-models-sandbox/${version}/enuk/model.enuk.intgemm8.bin
 wget https://storage.googleapis.com/bergamot-models-sandbox/${version}/enuk/srcvocab.enuk.spm
 wget https://storage.googleapis.com/bergamot-models-sandbox/${version}/enuk/trgvocab.enuk.spm
