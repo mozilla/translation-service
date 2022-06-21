@@ -118,7 +118,7 @@ namespace marian {
                         "\nmini-batch-words: 1024"
                         "\nworkspace: 128"
                         "\nmax-length-factor: 2.0"
-                        "\nskip-costls: True"
+                        "\nskip-cost: True"
                         "\nquiet: True"
                         "\nquiet-translation: True"
                         "\ngemm-precision: int8shiftAll";
