@@ -16,7 +16,7 @@ run:
 	docker run --name translation-service -it --rm -v $$(pwd)/models:/models -p 8080:8080 -e PORT=8080 translation-service
 
 debug:
-	docker run --name translation-service -it --rm -v $$(pwd):/app -v $$(pwd)/models:/models -p 8080:8080 translation-service bash
+	docker run --name translation-service -it --rm -v $$(pwd):/app -v $$(pwd)/models:/models -e PORT=8080 -p 8080:8080 translation-service bash
 
 call:
 	curl --header "Content-Type: application/json" \

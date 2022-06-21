@@ -44,6 +44,14 @@ def test_non_latin():
     assert translation == 'Как дела?' or translation == 'Как у тебя дела?'
 
 
+def test_different_shortlist():
+    query = {"from": "en", "to": "bg", "text": 'Hello world'}
+
+    resp = requests.post(url + '/v1/translate', json=query)
+
+    assert resp.status_code == 200
+    assert resp.json()['result'] == 'Здравей свят'
+
 def test_json_escaping():
     query = {"from": "es", "to": "en", "text": '"Hola Mundo"'}
 

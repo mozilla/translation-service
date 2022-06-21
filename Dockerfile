@@ -24,6 +24,11 @@ RUN sh -c 'echo deb https://apt.repos.intel.com/mkl all main > /etc/apt/sources.
     apt-get update && \
     apt-get install -y intel-mkl-64bit-2020.0-088
 
+# attempt to use openblas
+#RUN apt search openblas
+#RUN apt install -y libopenblas-dev
+#RUN update-alternatives --config libblas.so.3
+
 # Bergamot
 # pcre2 is requried to build berrgamot-translator with -DUSE_WASM_COMPATIBLE_SOURCES=off
 RUN apt-get install -y libpcre2-dev
