@@ -43,6 +43,13 @@ def test_non_latin():
     # behavior of this model can be non-deterministic, both translations are correct
     assert translation == 'Как дела?' or translation == 'Как у тебя дела?'
 
+def test_int8():
+    query = {"from": "en", "to": "uk", "text": 'How are you?'}
+
+    resp = requests.post(url + '/v1/translate', json=query)
+
+    assert resp.status_code == 200
+    assert resp.json()['result'] == 'Як ти?'
 
 def test_different_shortlist():
     query = {"from": "en", "to": "bg", "text": 'Hello world'}

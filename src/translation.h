@@ -27,6 +27,9 @@ namespace marian {
         static bool endsWith(std::string_view str, std::string_view suffix) {
             return str.size() >= suffix.size() && 0 == str.compare(str.size() - suffix.size(), suffix.size(), suffix);
         }
+        static bool startsWith(std::string_view str, std::string_view prefix) {
+            return str.size() >= prefix.size() && 0 == str.compare(0, prefix.size(), prefix);
+        }
 
         class TranslatorWrapper {
 
@@ -38,25 +41,33 @@ namespace marian {
                 for (const auto &entry: std::filesystem::directory_iterator(modelsDir)) {
                     auto basePath = entry.path();
                     auto pair = entry.path().filename().string();
-                    std::string vocabPath = "";
+                    std::string srcVocabPath = "";
+                    std::string trgVocabPath = "";
                     std::string modelPath = "";
                     std::string shortlistPath = "";
 
                     std::cout << "Looking for models in " << basePath << std::endl;
 
                     for (const auto &entry2: std::filesystem::directory_iterator(basePath)) {
-                        std::cout << "Adding file " << entry2.path().filename().string() << std::endl;
-                        if (endsWith(entry2.path().filename().string(), ".spm"))
-                            vocabPath = entry2.path().string();
-                        else if (endsWith(entry2.path().filename().string(), ".intgemm.alphas.bin"))
-                            modelPath = entry2.path().string();
-                        else if (endsWith(entry2.path().filename().string(), ".s2t.bin"))
-                            shortlistPath = entry2.path().string();
+                        auto fileNameStr = entry2.path().filename().string();
+                        auto pathStr = entry2.path().string();
+                        if (endsWith(fileNameStr, ".spm")) {
+                            if (startsWith(fileNameStr, "srcvocab"))
+                                srcVocabPath = pathStr;
+                            else if (startsWith(fileNameStr, "trgvocab"))
+                                trgVocabPath = pathStr;
+                            else {
+                                srcVocabPath = pathStr;
+                                trgVocabPath = pathStr;
+                            }
+                        }
+                        else if (endsWith(fileNameStr, ".intgemm.alphas.bin") || endsWith(fileNameStr, ".intgemm8.bin"))
+                            modelPath = pathStr;
+                        else if (endsWith(fileNameStr, ".s2t.bin"))
+                            shortlistPath = pathStr;
                     }
 
-                    std::cout << "Building models config for " << pair << std::endl;
-
-                    auto config = buildConfig(modelPath, vocabPath, shortlistPath);
+                    auto config = buildConfig(modelPath, srcVocabPath, trgVocabPath, shortlistPath);
                     auto options = parseOptionsFromString(config);
                     MemoryBundle memoryBundle;
                     std::cout << "Creating translation model for " << pair << std::endl;
@@ -98,7 +109,7 @@ namespace marian {
             size_t _numWorkers;
 
             const std::string
-            buildConfig(const std::string &modelPath, const std::string &vocabPath, const std::string &shortlistPath) {
+            buildConfig(const std::string &modelPath, const std::string &srcVocabPath, const std::string &trgVocabPath, const std::string &shortlistPath) {
                 std::string options =
                         "beam-size: 1"
                         "\nnormalize: 1.0"
@@ -110,10 +121,9 @@ namespace marian {
                         "\nskip-cost: True"
                         "\nquiet: True"
                         "\nquiet-translation: True"
-                        "\ngemm-precision: int8shift"
-                        "\nalignment: soft";
+                        "\ngemm-precision: int8shiftAll";
 
-                options = options + "\nmodels: [" + modelPath + "]\nvocabs: [" + vocabPath + ", " + vocabPath +
+                options = options + "\nmodels: [" + modelPath + "]\nvocabs: [" + srcVocabPath + ", " + trgVocabPath +
                           "]\nshortlist: [" + shortlistPath + ", false]";
 
                 return options;
